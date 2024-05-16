@@ -26,10 +26,7 @@ def import_and_predict(image_data, model):
     image = ImageOps.fit(image_data, size)
     img = np.asarray(image)
     img_reshape = img[np.newaxis, ...] / 255.0  # Normalize pixel values
-    st.write(f"Input image shape: {img_reshape.shape}")
-    st.write(f"Model input shape: {model.input_shape}")
-    prediction = model.predict(img_reshape)
-    return prediction
+    return model.predict(img_reshape)
 
 # Streamlit UI
 st.write("""
@@ -40,10 +37,13 @@ file = st.file_uploader("Choose a Dog photo from computer", type=["jpg", "png"])
 if file is None:
     st.text("Please upload an image file")
 else:
-    image = Image.open(file)
-    st.image(image, use_column_width=True)
-    prediction = import_and_predict(image, model)
-    class_names = ['ShibaInu', 'GoldenRetriever', 'GermanSheperd', 'Chihuahua']
-    predicted_class = class_names[np.argmax(prediction)]
-    
-    st.success(f"Prediction: {predicted_class}")
+    try:
+        image = Image.open(file)
+        st.image(image, use_column_width=True)
+        prediction = import_and_predict(image, model)
+        class_names = ['ShibaInu', 'GoldenRetriever', 'GermanSheperd', 'Chihuahua']
+        predicted_class = class_names[np.argmax(prediction)]
+        st.success(f"Prediction: {predicted_class}")
+    except Exception as e:
+        st.error("An error occurred:")
+        st.error(str(e))
