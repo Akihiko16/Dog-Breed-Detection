@@ -12,6 +12,7 @@ import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
 
+try:
 # Load the model
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -45,5 +46,9 @@ else:
     prediction = import_and_predict(image, model)
     class_names = ['ShibaInu', 'GoldenRetriever', 'GermanSheperd', 'Chihuahua']
     predicted_class = class_names[np.argmax(prediction)]
+    
     st.success(f"Prediction: {predicted_class}")
 
+except BrokenPipeError as e:
+    st.error("An error occurred: BrokenPipeError")
+    st.error(str(e))
