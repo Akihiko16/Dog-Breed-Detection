@@ -12,7 +12,6 @@ import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
 
-try:
 # Load the model
 @st.cache(allow_output_mutation=True)
 def load_model():
