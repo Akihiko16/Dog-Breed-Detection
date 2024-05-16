@@ -26,6 +26,8 @@ def import_and_predict(image_data, model):
     image = ImageOps.fit(image_data, size)
     img = np.asarray(image)
     img_reshape = img[np.newaxis, ...] / 255.0  # Normalize pixel values
+    st.write(f"Input image shape: {img_reshape.shape}")
+    st.write(f"Model input shape: {model.input_shape}")
     prediction = model.predict(img_reshape)
     return prediction
 
