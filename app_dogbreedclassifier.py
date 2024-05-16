@@ -47,7 +47,3 @@ else:
     predicted_class = class_names[np.argmax(prediction)]
     
     st.success(f"Prediction: {predicted_class}")
-
-except BrokenPipeError as e:
-    st.error("An error occurred: BrokenPipeError")
-    st.error(str(e))
